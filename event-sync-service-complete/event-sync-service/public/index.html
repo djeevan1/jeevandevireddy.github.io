@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Reconciled CRM and calendar meetings with conflict and provenance visibility.">
+  <meta name="api-base" content="">
+  <title>Event Sync Service</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Unified sales meeting view</p>
+      <h1>Event Sync Service</h1>
+      <p>Reconcile CRM and calendar records, inspect matching decisions, and surface every disagreement.</p>
+    </div>
+    <div class="hero-actions">
+      <span id="health" class="health">Checking service…</span>
+      <button id="reload" type="button">Reload source data</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="notice" class="notice hidden" role="status"></section>
+    <section id="stats" class="stats" aria-label="Meeting summary"></section>
+
+    <section class="panel filters" aria-label="Meeting filters">
+      <form id="searchForm" class="filter-wide search-group">
+        <label for="search">Search</label>
+        <div class="search-row">
+          <input id="search" type="search" placeholder="Title, client, company, owner, source ID…">
+          <button id="searchButton" type="submit">Search</button>
+        </div>
+      </form>
+      <div><label for="source">Source</label><select id="source"><option value="">All sources</option><option value="crm">CRM</option><option value="calendar">Calendar</option></select></div>
+      <div><label for="status">Status</label><select id="status"><option value="">All statuses</option></select></div>
+      <div><label for="owner">Owner</label><select id="owner"><option value="">All owners</option></select></div>
+      <div><label for="from">From</label><input id="from" type="date"></div>
+      <div><label for="to">To</label><input id="to" type="date"></div>
+      <div><label for="sort">Sort by</label><select id="sort"><option value="date">Date</option><option value="title">Title</option><option value="owner">Owner</option><option value="company">Company</option><option value="status">Status</option><option value="conflicts">Conflict count</option></select></div>
+      <div><label for="order">Order</label><select id="order"><option value="asc">Ascending</option><option value="desc">Descending</option></select></div>
+      <label class="check"><input id="conflicts" type="checkbox"> Conflicts only</label>
+      <label class="check"><input id="warnings" type="checkbox"> Warnings only</label>
+      <button id="clear" class="secondary" type="button">Clear filters</button>
+    </section>
+
+    <section class="results-head">
+      <div><h2>Meetings</h2><p id="resultText">Loading…</p></div>
+      <label>Per page <select id="limit"><option>10</option><option selected>20</option><option>50</option><option>100</option></select></label>
+    </section>
+
+    <section id="meetings" class="grid" aria-live="polite"></section>
+    <nav class="pagination" aria-label="Meeting result pages">
+      <button id="previous" class="secondary" type="button">Previous</button>
+      <span id="pageText"></span>
+      <button id="next" class="secondary" type="button">Next</button>
+    </nav>
+  </main>
+
+  <template id="card">
+    <article class="card">
+      <div class="card-head">
+        <div><p class="date"></p><h3></h3><p class="ids"></p></div>
+        <div class="badges"></div>
+      </div>
+      <div class="details"></div>
+      <div class="warning-list"></div>
+      <details><summary>Matching, conflicts, and provenance</summary><div class="provenance"></div></details>
+    </article>
+  </template>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
